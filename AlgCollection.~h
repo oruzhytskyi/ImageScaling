@@ -1,0 +1,57 @@
+//---------------------------------------------------------------------------
+
+#ifndef AlgCollectionH
+#define AlgCollectionH
+
+#include <Controls.hpp>
+#include <vector>
+#include <math>
+using namespace std;
+
+class Array
+{
+  public:
+        Array(int n, int m);
+        int getn(void){return n;};
+        int getm(void){return m;};
+        long getel(int i,int j){return a[i][j];};
+        void setel(int i,int j,long el){a[i][j]=el;};
+  private:
+        long** a;
+        int n;
+        int m;
+};
+
+class FlArray
+{
+  public:
+        FlArray(int n, int m);
+        int getn(void){return n;};
+        int getm(void){return m;};
+        long getel(int i,int j){return a[i][j];};
+        void setel(int i,int j,float el){a[i][j]=el;};
+  private:
+        float** a;
+        int n;
+        int m;
+};
+
+class AlgCollection
+{
+  public:
+        void bicubicInterpolation(Array* iarr, Array* oarr);
+        void bilinearInterpolation(Array* iarr, Array* oarr);
+        void nearestNeighbor(Array* iarr, Array* oarr);
+  private:
+        long bicubicFunction(long* b, long** f);
+        void bicubicGetCoeficients(long x, long y, long* b);
+        void bicubicNearestMatrCoords(long x, long y, long n, long m, int size, long& a, long& b);
+        void bicubicNearestPointsMatr(long a, long b,int size, long** f, Array* arr);
+        void makeLowTriangMatr(Array* ia, Array* oa);
+        long getAforL(int x, int y, Array* arr);
+        long getDetForL(Array* arr);
+        void makeSubArr(int x, int y, Array* ia, Array *oa);
+};
+
+//---------------------------------------------------------------------------
+#endif
