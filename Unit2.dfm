@@ -1,6 +1,6 @@
 object ResForm: TResForm
   Left = 249
-  Top = 113
+  Top = 150
   Width = 498
   Height = 375
   Caption = 'Result form'

@@ -28,7 +28,7 @@ long matr[4][1];
   int n=iarr->getn();
   int m=iarr->getm();
   long si=0,sj=0;
-  int size=4;
+  int size=2;
   Array<long>* y=new Array<long>(size*size,1);
   Array<long>* x=new Array<long>(size*size,1);
   Array<double>* b=new Array<double>(size*size,1);
@@ -48,10 +48,13 @@ long matr[4][1];
 //    bicubicNearestPointsMatr(a,c,size,f,iarr);
 
     bicubicGetCoeficients(x,y,b);
-    oarr->setel(i*2,j*2,(TColor)bicubicFunction(j*2+i*2*size,b));
-    oarr->setel(i*2+1,j*2,(TColor)bicubicFunction(j*2+(i*2+1)*size,b));
-    oarr->setel(i*2,j*2+1,(TColor)bicubicFunction((j*2+1)+i*2*size,b));
-    oarr->setel(i*2+1,j*2+1,(TColor)bicubicFunction((j*2+1)+(i*2+1)*size,b));
+ //   oarr->setel(i*2,j*2,bicubicFunction(j*2+i*2*size,b));
+    oarr->setel(i*2,j*2,iarr->getel(i,j));
+    long el2=oarr->getel(i*2,j*2);
+    //oarr->setel(i*2+1,j*2,bicubicFunction(j*2+(i*2+1)*size,b));
+    long ell=  bicubicFunction((j*2+1)+i*2*size,b);
+    oarr->setel(i*2,j*2+1,bicubicFunction((j*2+1)+i*2*size,b));
+    //oarr->setel(i*2+1,j*2+1,bicubicFunction((j*2+1)+(i*2+1)*size,b));
 
 /*    bicubicGetCoeficients(i-a,j-c+1,b);
     oarr->setel(i*2,j*2+1,(TColor)bicubicFunction(b,f));
@@ -73,18 +76,20 @@ void AlgCollection::bicubicNearestMatrCoords(long x, long y, long n, long m, int
 {
   a=x;
   b=y;
-  if(x<(long)size/2) {a=0;};
+/*  if(x<(long)size/2) {a=0;};
   if(y<(long)size/2) {b=0;};
   if(x>n-(long)size/2-1) {a=n-(long)size/2-1;};
   if(y>m-(long)size/2-1) {b=m-(long)size/2-1;};
+*/
 };
 
 long AlgCollection::bicubicFunction(long x, Array<double>* b)
 {
-  long result=0;
+  double result=0;
   for(int i=0;i<b->getn();i++)
-    result=result+b->getel(i,0)*pow(x,i);
-  return div(result,1).quot;
+    result=result+b->getel(i,0)*powl(x,i);
+  if (div(result,1).rem>0.5) result=(long)div(result,1).quot+1; else result=(long)div(result,1).quot;
+  return result;
 };
 
 void AlgCollection::bicubicGetCoeficients(Array<long>* x, Array<long>* y, Array<double>* b)

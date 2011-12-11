@@ -7,9 +7,9 @@
 #include <Controls.hpp>
 #include <StdCtrls.hpp>
 #include <Forms.hpp>
-#include <unit1.h>
+#include "unit1.h"
 #include <ExtCtrls.hpp>
-#include <AlgCollection.h>
+#include "AlgCollection.h"
 //---------------------------------------------------------------------------
 class TResForm : public TForm
 {

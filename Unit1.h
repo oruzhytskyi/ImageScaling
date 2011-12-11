@@ -10,8 +10,8 @@
 #include <ExtCtrls.hpp>
 #include <Dialogs.hpp>
 #include <ExtDlgs.hpp>
-#include <unit2.h>
-#include <AlgCollection.h>
+#include "unit2.h"
+#include "AlgCollection.h"
 //---------------------------------------------------------------------------
 class TMainForm : public TForm
 {

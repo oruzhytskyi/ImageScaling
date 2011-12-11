@@ -6,6 +6,7 @@
 #include <Controls.hpp>
 #include <math>
 #include "MyAlgorithms.h"
+#include <float>
 using namespace std;
 
 class AlgCollection
