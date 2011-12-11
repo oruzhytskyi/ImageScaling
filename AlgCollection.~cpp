@@ -8,7 +8,7 @@
 //---------------------------------------------------------------------------
 
 #pragma package(smart_init)
-void AlgCollection::nearestNeighbor(Array* iarr, Array* oarr)
+void AlgCollection::nearestNeighbor(Array<long>* iarr, Array<long>* oarr)
 {
   for(int i=0;i<iarr->getn();i++)
   for(int j=0;j<iarr->getm();j++)
@@ -20,74 +20,48 @@ void AlgCollection::nearestNeighbor(Array* iarr, Array* oarr)
   }
 };
 
-void AlgCollection::bicubicInterpolation(Array* iarr, Array* oarr)
+void AlgCollection::bicubicInterpolation(Array<long>* iarr, Array<long>* oarr)
 {
+//debugging
+long matr[4][1];
+//debugging
   int n=iarr->getn();
   int m=iarr->getm();
-  long a=0,c=0;
-  int size=4;
+  long si=0,sj=0;
+  int size=2;
+  Array<long>* y=new Array<long>(size*size,1);
+  Array<long>* x=new Array<long>(size*size,1);
+  Array<double>* b=new Array<double>(size*size,1);
 
-  long** f=new long*[size];
-  for(int i=0;i<size;i++) f[i]=new long[size];
-
-  long* b=new long[size*size];
-
-/*  for(int i=0;i<n-2;i++)
-  for(int j=0;j<m-2;j++)
+  for(int i=1;i<n-2;i++)
+  for(int j=1;j<m-2;j++)
   {
-    bicubicNearestMatrCoords(i,j,n,m,size,a,c);
-    bicubicNearestPointsMatr(a,c,size,f,iarr);
+    bicubicNearestMatrCoords(i,j,n,m,size,si,sj);
+    for(int k=0;k<size;k++)
+      for(int z=0;z<size;z++)
+      {
+        y->setel(z+k*size,0,iarr->getel(si+k,sj+z));
+        x->setel(z+k*size,0,2*((sj+z)+(k+si)*size));
+      };
 
-    bicubicGetCoeficients(i-a+1,j-c,b);
-    oarr->setel(i*2+1,j*2,(TColor)bicubicFunction(b,f));
+//    bicubicNearestPointsMatr(a,c,size,f,iarr);
 
-    bicubicGetCoeficients(i-a,j-c+1,b);
+    bicubicGetCoeficients(x,y,b);
+    oarr->setel(i*2,j*2,(TColor)bicubicFunction(j*2+i*2*size,b));
+    oarr->setel(i*2+1,j*2,(TColor)bicubicFunction(j*2+(i*2+1)*size,b));
+    oarr->setel(i*2,j*2+1,(TColor)bicubicFunction((j*2+1)+i*2*size,b));
+    oarr->setel(i*2+1,j*2+1,(TColor)bicubicFunction((j*2+1)+(i*2+1)*size,b));
+
+/*    bicubicGetCoeficients(i-a,j-c+1,b);
     oarr->setel(i*2,j*2+1,(TColor)bicubicFunction(b,f));
 
     bicubicGetCoeficients(i-a+1,j-c+1,b);
     oarr->setel(i*2+1,j*2+1,(TColor)bicubicFunction(b,f));
-  };
 */
+   };
 };
 
-void makeLowTriangMatr(Array* ia, FlArray* oa)
-{
-  for(int i=0;i<ia->getn();i++)
-  for(int j=0;j<ia->getm();i++)
-  {
-
-  }
-};
-
-
-long AlgCollection::getAforL(int x, int y, Array* arr)
-{
-  Array* sarr= new Array(arr->getn()-1, arr->getm()-1);
-  makeSubArr(x,y,arr,sarr);
-  long det=getDetForL(sarr);
-  return (long)pow(-1,x+y)*det;
-};
-long AlgCollection::getDetForL(Array* arr)
-{
-  long res=1;
-  for(int i=0;i<arr->getn();i++)
-  res=res*arr->getel(i,i);
-  return res;
-};
-void AlgCollection::makeSubArr(int x, int y, Array* ia, Array *oa)
-{
-  for(int i=0;i<oa->getn();i++)
-  for(int j=0;j<oa->getm();j++)
-  {
-    int ii=i, jj=j;
-    if(i>=x){ii++;};
-    if(j>=y){jj++;};
-    oa->setel(i,j,ia->getel(ii,jj));
-  };
-};
-
-
-void AlgCollection::bicubicNearestPointsMatr(long a, long b, int size, long** f, Array* arr)
+void AlgCollection::bicubicNearestPointsMatr(long a, long b, int size, long** f, Array<long>* arr)
 {
   for(int i=0;i<size;i++)
   for(int j=0;j<size;j++)
@@ -104,45 +78,64 @@ void AlgCollection::bicubicNearestMatrCoords(long x, long y, long n, long m, int
   if(y>m-(long)size/2-1) {b=m-(long)size/2-1;};
 };
 
-long AlgCollection::bicubicFunction(long* b, long** f)
+long AlgCollection::bicubicFunction(long x, Array<double>* b)
 {
-  return b[0]*f[1][1]+ b[1]*f[1][2]+b[2]*f[2][1]+b[3]*f[2][2]+b[4]*f[1][0]+b[5]*f[0][1]+b[6]*f[2][0]+b[7]*f[0][2]+b[8]*f[1][3]+b[9]*f[3][1]+b[10]*f[0][0]+b[11]*f[2][3]+ b[12]*f[3][2]+b[13]*f[0][3]+ b[14]*f[3][0]+ b[15]*f[3][3];
+  long result=0;
+  for(int i=0;i<b->getn();i++)
+    result=result+b->getel(i,0)*pow(x,i);
+  return div(result,1).quot;
 };
 
-void AlgCollection::bicubicGetCoeficients(long x, long y, long* b)
+void AlgCollection::bicubicGetCoeficients(Array<long>* x, Array<long>* y, Array<double>* b)
 {
-  b[0]=(long)((x-1)*(x-2)*(x+1)*(y-1)*(y-2)*(y+1)/4);
-  b[1]=(long)(-(x)*(x-2)*(x+1)*(y-1)*(y-2)*(y+1)/4);
-  b[2]=(long)(-(y)*(x-1)*(x-2)*(x+1)*(y-2)*(y+1)/4);
-  b[3]=(long)(x*y*(x-2)*(x+1)*(y-2)*(y+1)/4);
-  b[4]=(long)(-x*(x-2)*(x-1)*(y-1)*(y-2)*(y+1)/12);
-  b[5]=(long)(-y*(x-2)*(x-1)*(x+1)*(y-2)*(y-1)/12);
-  b[6]=(long)(x*y*(x-2)*(x-1)*(y-2)*(y+1)/12);
-  b[7]=(long)(x*y*(x-2)*(x+1)*(y-2)*(y-1)/12);
-  b[8]=(long)(x*(x-1)*(x+1)*(y-2)*(y-1)*(y+1)/12);
-  b[9]=(long)(y*(x-1)*(x-2)*(x+1)*(y-1)*(y+1)/12);
-  b[10]=(long)(x*y*(x-1)*(x-2)*(y-1)*(y-2)/36);
-  b[11]=(long)(-x*y*(x-1)*(x+1)*(y+1)*(y-2)/12);
-  b[12]=(long)(-x*y*(x-2)*(x+1)*(y+1)*(y-1)/12);
-  b[13]=(long)(-x*y*(x-1)*(x+1)*(y-2)*(y-1)/36);
-  b[14]=(long)(-x*y*(x-1)*(x-2)*(y-1)*(y+1)/36);
-  b[15]=(long)(x*y*(x-1)*(x+1)*(y-1)*(y+1)/36);
+  double matr[4][1];
+  for(int i=0;i<x->getn();i++)
+    for(int j=0;j<x->getm();j++)
+      matr[i][j]=x->getel(i,j);
+
+  Array<double>* yy=new Array<double>(y->getn(),y->getm());
+  for(int i=0;i<y->getn();i++)
+    for(int j=0;j<y->getm();j++)
+      yy->setel(i,j,(double)y->getel(i,j));
+
+  Array<double>* xx=new Array<double>(x->getn(),x->getn());
+  for(int i=0;i<xx->getn();i++)
+    for(int j=0;j<xx->getm();j++)
+      if((x->getel(i,0)==0)&&(j==0)) xx->setel(i,j,1);
+        else xx->setel(i,j,pow(x->getel(i,0),j));
+
+  Algorithms* Algs=new Algorithms();
+  Array<double>* inv=new Array<double>(x->getn(),x->getn());
+  Algs->invMatr<double>(xx, inv);
+  Algs->multMatr<double>(inv,yy,b);
+
+  double matr1[4][4];
+  for(int i=0;i<xx->getn();i++)
+    for(int j=0;j<xx->getm();j++)
+      matr1[i][j]=xx->getel(i,j);
+
+  double matr2[4][4];
+  for(int i=0;i<inv->getn();i++)
+    for(int j=0;j<inv->getm();j++)
+      matr2[i][j]=inv->getel(i,j);
+
+  double matr3[4][1];
+  for(int i=0;i<yy->getn();i++)
+    for(int j=0;j<yy->getm();j++)
+      matr3[i][j]=yy->getel(i,j);
+
+  double matr4[4][4];
+  for(int i=0;i<b->getn();i++)
+    for(int j=0;j<b->getm();j++)
+      matr4[i][j]=b->getel(i,j);
+
+  double matr5[4][1];
+  for(int i=0;i<b->getn();i++)
+    for(int j=0;j<b->getm();j++)
+      matr4[i][j]=b->getel(i,j);
+
+  for(int i=0;i<1;i++);
+
 };
 
-Array::Array(int n, int m)
-{
-    this->n=n;
-    this->m=m;
-    a=new long*[n];
-    for(int i=0;i<n;i++)
-    a[i]=new long[m];
-};
 
-FlArray::FlArray(int n, int m)
-{
-    this->n=n;
-    this->m=m;
-    a=new float*[n];
-    for(int i=0;i<n;i++)
-    a[i]=new float[m];
-};

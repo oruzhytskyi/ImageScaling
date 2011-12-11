@@ -22,37 +22,44 @@ void AlgCollection::nearestNeighbor(Array<long>* iarr, Array<long>* oarr)
 
 void AlgCollection::bicubicInterpolation(Array<long>* iarr, Array<long>* oarr)
 {
+//debugging
+long matr[4][1];
+//debugging
   int n=iarr->getn();
   int m=iarr->getm();
-  long a=0,c=0;
+  long si=0,sj=0;
   int size=4;
+  Array<long>* y=new Array<long>(size*size,1);
+  Array<long>* x=new Array<long>(size*size,1);
+  Array<double>* b=new Array<double>(size*size,1);
 
-  long** f=new long*[size];
-  for(int i=0;i<size;i++) f[i]=new long[size];
-
-  long* b=new long[size*size];
-
-  for(int i=0;i<n-2;i++)
-  for(int j=0;j<m-2;j++)
+  for(int i=1;i<n-2;i++)
+  for(int j=1;j<m-2;j++)
   {
-    bicubicNearestMatrCoords(i,j,n,m,size,a,c);
-    for(int i=0;i<size;i++)
-    {
-      x->setel(i,0,i+a);
-      y->setel(i,0,iarr->getel(i+a,j));
-    };
+    bicubicNearestMatrCoords(i,j,n,m,size,si,sj);
+
+    for(int k=0;k<size;k++)
+      for(int z=0;z<size;z++)
+      {
+        y->setel(z+k*size,0,iarr->getel(si+k,sj+z));
+        x->setel(z+k*size,0,2*((sj+z)+(k+si)*size));
+      };
+
 //    bicubicNearestPointsMatr(a,c,size,f,iarr);
 
     bicubicGetCoeficients(x,y,b);
-    oarr->setel(i*2+1,j*2,(TColor)bicubicFunction(b,f));
+    oarr->setel(i*2,j*2,(TColor)bicubicFunction(j*2+i*2*size,b));
+    oarr->setel(i*2+1,j*2,(TColor)bicubicFunction(j*2+(i*2+1)*size,b));
+    oarr->setel(i*2,j*2+1,(TColor)bicubicFunction((j*2+1)+i*2*size,b));
+    oarr->setel(i*2+1,j*2+1,(TColor)bicubicFunction((j*2+1)+(i*2+1)*size,b));
 
-    bicubicGetCoeficients(i-a,j-c+1,b);
+/*    bicubicGetCoeficients(i-a,j-c+1,b);
     oarr->setel(i*2,j*2+1,(TColor)bicubicFunction(b,f));
 
     bicubicGetCoeficients(i-a+1,j-c+1,b);
     oarr->setel(i*2+1,j*2+1,(TColor)bicubicFunction(b,f));
-  };
-
+*/
+   };
 };
 
 void AlgCollection::bicubicNearestPointsMatr(long a, long b, int size, long** f, Array<long>* arr)
@@ -64,43 +71,72 @@ void AlgCollection::bicubicNearestPointsMatr(long a, long b, int size, long** f,
 
 void AlgCollection::bicubicNearestMatrCoords(long x, long y, long n, long m, int size, long& a, long& b)
 {
-  a=x-1;
-  b=y-1;
+  a=x;
+  b=y;
   if(x<(long)size/2) {a=0;};
   if(y<(long)size/2) {b=0;};
   if(x>n-(long)size/2-1) {a=n-(long)size/2-1;};
   if(y>m-(long)size/2-1) {b=m-(long)size/2-1;};
 };
 
-long AlgCollection::bicubicFunction(long x, Array<float>* b, long f)
+long AlgCollection::bicubicFunction(long x, Array<double>* b)
 {
   long result=0;
   for(int i=0;i<b->getn();i++)
     result=result+b->getel(i,0)*pow(x,i);
-  return result;
+  return div(result,1).quot;
 };
 
-void AlgCollection::bicubicGetCoeficients(Array<long>* x, Array<long>* y, Array<float>* b)
+void AlgCollection::bicubicGetCoeficients(Array<long>* x, Array<long>* y, Array<double>* b)
 {
-  float matr[4][4];
-  Array<float>* yy=new Array<float>(y->getn(),y->getm());
+  double matr[4][1];
+  for(int i=0;i<x->getn();i++)
+    for(int j=0;j<x->getm();j++)
+      matr[i][j]=x->getel(i,j);
+
+  Array<double>* yy=new Array<double>(y->getn(),y->getm());
   for(int i=0;i<y->getn();i++)
     for(int j=0;j<y->getm();j++)
-      yy->setel(i,j,(float)y->getel(i,j));
+      yy->setel(i,j,(double)y->getel(i,j));
 
-  for(int i=0;i<y->getn();i++)
-    for(int j=0;j<y->getm();j++)
-      matr[i][j]=yy->getel(i,j);
-
-  Array<float>* xx=new Array<float>(x->getn(),x->getn());
+  Array<double>* xx=new Array<double>(x->getn(),x->getn());
   for(int i=0;i<xx->getn();i++)
-    for(int j=0;i<xx-getm();j++)
-      xx->setel(i,j,pow(x->getel(i,0),j));
+    for(int j=0;j<xx->getm();j++)
+      if((x->getel(i,0)==0)&&(j==0)) xx->setel(i,j,1);
+        else xx->setel(i,j,pow(x->getel(i,0),j));
 
   Algorithms* Algs=new Algorithms();
-  Array<float>* inv=new Array<float>(x->getn(),x->getn());
-  Algs->invMatr(xx, inv);
-  Algs->multMatr(inv,y,b);
+  Array<double>* inv=new Array<double>(x->getn(),x->getn());
+  Algs->invMatr<double>(xx, inv);
+  Algs->multMatr<double>(inv,yy,b);
+
+  double matr1[4][4];
+  for(int i=0;i<xx->getn();i++)
+    for(int j=0;j<xx->getm();j++)
+      matr1[i][j]=xx->getel(i,j);
+
+  double matr2[4][4];
+  for(int i=0;i<inv->getn();i++)
+    for(int j=0;j<inv->getm();j++)
+      matr2[i][j]=inv->getel(i,j);
+
+  double matr3[4][1];
+  for(int i=0;i<yy->getn();i++)
+    for(int j=0;j<yy->getm();j++)
+      matr3[i][j]=yy->getel(i,j);
+
+  double matr4[4][4];
+  for(int i=0;i<b->getn();i++)
+    for(int j=0;j<b->getm();j++)
+      matr4[i][j]=b->getel(i,j);
+
+  double matr5[4][1];
+  for(int i=0;i<b->getn();i++)
+    for(int j=0;j<b->getm();j++)
+      matr4[i][j]=b->getel(i,j);
+
+  for(int i=0;i<1;i++);
+
 };
 
 

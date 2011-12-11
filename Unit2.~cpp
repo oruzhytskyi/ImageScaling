@@ -21,17 +21,17 @@ void __fastcall TResForm::FormShow(TObject *Sender)
   int on=MainForm->Image1->Picture->Height*2;
   int om=MainForm->Image1->Picture->Width*2;
   AlgCollection* Algs;
-  Array* arr=new Array(in,im);
-  Array* resarr=new Array(on,om);
+  Array<long>* arr=new Array<long>(in,im);
+  Array<long>* resarr=new Array<long>(on,om);
 
   MainForm->formPictureArray(arr);
  // Algs->nearestNeighbor(arr,resarr);
-//  Algs->bicubicInterpolation(arr,resarr);
+  Algs->bicubicInterpolation(arr,resarr);
 
   Image1->Center=true;
   for(int i=0;i<resarr->getn();i++)
   for(int j=0;j<resarr->getm();j++)
-  Image1->Canvas->Pixels[j][i] = resarr->getel(i,j);
+  Image1->Canvas->Pixels[j][i] = (TColor)resarr->getel(i,j);
 //  Image1->Canvas->Pixels[j][i] = (TColor)RGB(GetRValue(ColorToRGB(arr->getel(i,j))),GetGValue(ColorToRGB(arr->getel(i,j))),GetBValue(ColorToRGB(arr->getel(i,j))));
 }
 //---------------------------------------------------------------------------

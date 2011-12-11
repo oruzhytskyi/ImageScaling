@@ -32,7 +32,7 @@ void TMainForm::formPictureArray(Array<long>* arr)
 
   for(int i=0;i<h;i++)
   for(int j=0;j<w;j++)
-    arr->setel(i,j,(long)Image1->Canvas->Pixels[j][i]);
+    arr->setel(i,j,(long)ColorToRGB(Image1->Canvas->Pixels[j][i]));
 }
 
 

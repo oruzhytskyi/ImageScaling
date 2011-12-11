@@ -15,8 +15,8 @@ class AlgCollection
         void bilinearInterpolation(Array<long>* iarr, Array<long>* oarr);
         void nearestNeighbor(Array<long>* iarr, Array<long>* oarr);
   private:
-        long bicubicFunction(long* b, long** f);
-        void bicubicGetCoeficients(long x, long y, long* b);
+        long bicubicFunction(long x, Array<double>* b);
+        void bicubicGetCoeficients(Array<long>* x, Array<long>* y, Array<double>* b);
         void bicubicNearestMatrCoords(long x, long y, long n, long m, int size, long& a, long& b);
         void bicubicNearestPointsMatr(long a, long b,int size, long** f, Array<long>* arr);
 };
