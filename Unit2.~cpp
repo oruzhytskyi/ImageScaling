@@ -4,7 +4,6 @@
 #pragma hdrstop
 
 #include "Unit2.h"
-#include "Unit4.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -29,8 +28,8 @@ void __fastcall TResForm::FormShow(TObject *Sender)
       resarr->setel(i,j,16777215);
 
   MainForm->formPictureArray(arr);
-  //Algs->nearestNeighbor(arr,resarr);
-  Algs->bicubicInterpolation(arr,resarr);
+  Algs->nearestNeighbor(arr,resarr);
+  //Algs->bicubicInterpolation(arr,resarr);
 
   Image1->Center=true;
   for(int i=0;i<resarr->getn();i++)

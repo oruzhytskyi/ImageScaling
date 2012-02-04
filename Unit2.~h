@@ -1,39 +1,26 @@
 //---------------------------------------------------------------------------
 
-#ifndef Unit1H
-#define Unit1H
+#ifndef Unit2H
+#define Unit2H
 //---------------------------------------------------------------------------
 #include <Classes.hpp>
 #include <Controls.hpp>
 #include <StdCtrls.hpp>
 #include <Forms.hpp>
+#include "unit1.h"
 #include <ExtCtrls.hpp>
-#include <Dialogs.hpp>
-#include <ExtDlgs.hpp>
-#include "unit2.h"
 #include "AlgCollection.h"
 //---------------------------------------------------------------------------
-class TMainForm : public TForm
+class TResForm : public TForm
 {
 __published:	// IDE-managed Components
         TImage *Image1;
-        TOpenDialog *OpenDialog1;
-        TButton *LoadPictureButton;
-        TMemo *Memo1;
-        TButton *Button1;
-        TButton *Button2;
-        void __fastcall LoadPictureButtonClick(TObject *Sender);
-        void __fastcall Button1Click(TObject *Sender);
-        void __fastcall Button2Click(TObject *Sender);
+        void __fastcall FormShow(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
-        __fastcall TMainForm(TComponent* Owner);
-        void formPictureArray(Array<long>* arr);
+        __fastcall TResForm(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
-
-extern PACKAGE TMainForm *MainForm;
+extern PACKAGE TResForm *ResForm;
 //---------------------------------------------------------------------------
 #endif
-
-

@@ -5,12 +5,12 @@
     <VERSION value="BCB.06.00"/>
     <PROJECT value="Project1.exe"/>
     <OBJFILES value="Project1.obj Unit1.obj Unit2.obj AlgCollection.obj Unit3.obj 
-      MyAlgorithms.obj Unit4.obj Unit5.obj"/>
+      MyAlgorithms.obj Unit4.obj"/>
     <RESFILES value="Project1.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
     <DEFFILE value=""/>
-    <RESDEPEN value="$(RESFILES) Unit1.dfm Unit2.dfm Unit5.dfm"/>
+    <RESDEPEN value="$(RESFILES) Unit1.dfm Unit2.dfm"/>
     <LIBFILES value=""/>
     <LIBRARIES value=""/>
     <SPARELIBS value="vcl.lib rtl.lib"/>
@@ -62,7 +62,6 @@
       <FILE FILENAME="Unit3.cpp" FORMNAME="" UNITNAME="Unit3" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="MyAlgorithms.cpp" FORMNAME="" UNITNAME="MyAlgorithms" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Unit4.cpp" FORMNAME="" UNITNAME="Unit4" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="Unit5.cpp" FORMNAME="Form5" UNITNAME="Unit5" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>
