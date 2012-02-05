@@ -7,16 +7,25 @@
 #include <Controls.hpp>
 #include <StdCtrls.hpp>
 #include <Forms.hpp>
+#include <ExtCtrls.hpp>
 //---------------------------------------------------------------------------
-class TForm5 : public TForm
+class TBilinearVSBicubic : public TForm
 {
 __published:	// IDE-managed Components
+        TImage *Image1;
+        TLabel *Label1;
+        TImage *Image2;
+        TLabel *Label2;
+        void __fastcall FormActivate(TObject *Sender);
 private:	// User declarations
+        int **arr,**resarr;
+        double **inp_r,**inp_g,**inp_b;
+        double **out_r,**out_g,**out_b;
 public:		// User declarations
-        __fastcall TForm5(TComponent* Owner);
+        __fastcall TBilinearVSBicubic(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
-extern PACKAGE TForm5 *Form5;
+extern PACKAGE TBilinearVSBicubic *BilinearVSBicubic;
 //---------------------------------------------------------------------------
 #endif
  

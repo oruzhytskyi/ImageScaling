@@ -3,25 +3,20 @@
 #include <vcl.h>
 #pragma hdrstop
 
+#include "Unit7.h"
 #include "Unit2.h"
-#include "Unit4.h"
 #include "Unit6.cpp"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
-TNearestVsBilinear *NearestVsBilinear;
+TNearestVSBicubic *NearestVSBicubic;
 //---------------------------------------------------------------------------
-__fastcall TNearestVsBilinear::TNearestVsBilinear(TComponent* Owner)
+__fastcall TNearestVSBicubic::TNearestVSBicubic(TComponent* Owner)
         : TForm(Owner)
 {
 }
 //---------------------------------------------------------------------------
-
-
-
-
-
-void __fastcall TNearestVsBilinear::FormActivate(TObject *Sender)
+void __fastcall TNearestVSBicubic::FormActivate(TObject *Sender)
 {
    int in=MainForm->Image1->Picture->Height;
    int im=MainForm->Image1->Picture->Width;
@@ -115,9 +110,9 @@ void __fastcall TNearestVsBilinear::FormActivate(TObject *Sender)
      };
 
 
-  bilinInterpolate(inp_r,in,im,out_r);
-  bilinInterpolate(inp_g,in,im,out_g);
-  bilinInterpolate(inp_b,in,im,out_b);
+  bicubInterpolate(inp_r,in,im,out_r);
+  bicubInterpolate(inp_g,in,im,out_g);
+  bicubInterpolate(inp_b,in,im,out_b);
 
 
   for(int i=0;i<on;i++)
@@ -142,7 +137,6 @@ void __fastcall TNearestVsBilinear::FormActivate(TObject *Sender)
      for(int j=0;j<om;j++) {
         Image2->Canvas->Pixels[j][i] = (TColor)resarr[i][j];
      };
+
 }
 //---------------------------------------------------------------------------
-
-

@@ -4,8 +4,9 @@
 #pragma hdrstop
 //---------------------------------------------------------------------------
 USEFORM("Unit1.cpp", MainForm);
-USEFORM("Unit2.cpp", ResForm);
-USEFORM("Unit5.cpp", Form5);
+USEFORM("Unit2.cpp", NearestVsBilinear);
+USEFORM("Unit5.cpp", BilinearVSBicubic);
+USEFORM("Unit7.cpp", NearestVSBicubic);
 //---------------------------------------------------------------------------
 WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -13,8 +14,9 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         {
                  Application->Initialize();
                  Application->CreateForm(__classid(TMainForm), &MainForm);
-                 Application->CreateForm(__classid(TResForm), &ResForm);
-                 Application->CreateForm(__classid(TForm5), &Form5);
+                 Application->CreateForm(__classid(TNearestVsBilinear), &NearestVsBilinear);
+                 Application->CreateForm(__classid(TBilinearVSBicubic), &BilinearVSBicubic);
+                 Application->CreateForm(__classid(TNearestVSBicubic), &NearestVSBicubic);
                  Application->Run();
         }
         catch (Exception &exception)

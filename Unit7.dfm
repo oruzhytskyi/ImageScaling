@@ -1,10 +1,10 @@
-object NearestVsBilinear: TNearestVsBilinear
-  Left = 722
-  Top = 205
-  Width = 489
-  Height = 251
+object NearestVSBicubic: TNearestVSBicubic
+  Left = 609
+  Top = 345
+  Width = 479
+  Height = 250
   AutoSize = True
-  Caption = 'Nearest neighbor VS Bilinear interpolation'
+  Caption = 'Nearest neighbor VS Bicubic interpolation'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object NearestVsBilinear: TNearestVsBilinear
   TextHeight = 13
   object Image1: TImage
     Left = 0
-    Top = 32
+    Top = 31
     Width = 225
     Height = 185
   end
@@ -35,17 +35,17 @@ object NearestVsBilinear: TNearestVsBilinear
     ParentFont = False
   end
   object Image2: TImage
-    Left = 256
-    Top = 32
+    Left = 246
+    Top = 31
     Width = 225
     Height = 185
   end
   object Label2: TLabel
-    Left = 320
+    Left = 278
     Top = 0
-    Width = 121
+    Width = 120
     Height = 16
-    Caption = 'Bilinear Interpolation'
+    Caption = 'Bicubic Interpolation'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13

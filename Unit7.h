@@ -1,26 +1,30 @@
 //---------------------------------------------------------------------------
 
-#ifndef Unit2H
-#define Unit2H
+#ifndef Unit7H
+#define Unit7H
 //---------------------------------------------------------------------------
 #include <Classes.hpp>
 #include <Controls.hpp>
 #include <StdCtrls.hpp>
 #include <Forms.hpp>
-#include "unit1.h"
 #include <ExtCtrls.hpp>
-#include "AlgCollection.h"
 //---------------------------------------------------------------------------
-class TResForm : public TForm
+class TNearestVSBicubic : public TForm
 {
 __published:	// IDE-managed Components
         TImage *Image1;
-        void __fastcall FormShow(TObject *Sender);
+        TLabel *Label1;
+        TImage *Image2;
+        TLabel *Label2;
+        void __fastcall FormActivate(TObject *Sender);
 private:	// User declarations
+        int **arr,**resarr;
+        double **inp_r,**inp_g,**inp_b;
+        double **out_r,**out_g,**out_b;
 public:		// User declarations
-        __fastcall TResForm(TComponent* Owner);
+        __fastcall TNearestVSBicubic(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
-extern PACKAGE TResForm *ResForm;
+extern PACKAGE TNearestVSBicubic *NearestVSBicubic;
 //---------------------------------------------------------------------------
 #endif

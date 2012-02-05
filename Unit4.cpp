@@ -198,7 +198,7 @@ namespace kurswork {
      std::vector<std::vector<double> > A(in_s);
      A.resize(in_s);
      for(int i=0;i<in_s;i++)
-        X[i].resize(1,0);
+        A[i].resize(1,0);
 
      std::vector<std::vector<double> > Y;
      Y = std::vector<std::vector<double> >(in_s,std::vector<double>(1,0));
