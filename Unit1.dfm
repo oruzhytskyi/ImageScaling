@@ -1,8 +1,8 @@
 object MainForm: TMainForm
-  Left = 283
-  Top = 318
-  Width = 665
-  Height = 385
+  Left = 654
+  Top = 266
+  Width = 645
+  Height = 381
   Caption = 'MainForm'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -14,13 +14,13 @@ object MainForm: TMainForm
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
-    Left = 16
-    Top = 16
+    Left = 0
+    Top = 8
     Width = 353
     Height = 321
   end
   object LoadPictureButton: TButton
-    Left = 416
+    Left = 400
     Top = 16
     Width = 75
     Height = 25
@@ -29,8 +29,8 @@ object MainForm: TMainForm
     OnClick = LoadPictureButtonClick
   end
   object Button1: TButton
-    Left = 416
-    Top = 64
+    Left = 400
+    Top = 56
     Width = 217
     Height = 25
     Caption = 'Nearest Neighbor vs Bilinear Interpolation'
@@ -38,8 +38,8 @@ object MainForm: TMainForm
     OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 416
-    Top = 104
+    Left = 400
+    Top = 96
     Width = 217
     Height = 25
     Caption = 'Nearest Neighbor vs Bicubic Interpolation'
@@ -47,8 +47,8 @@ object MainForm: TMainForm
     OnClick = Button2Click
   end
   object Button3: TButton
-    Left = 416
-    Top = 144
+    Left = 400
+    Top = 136
     Width = 217
     Height = 25
     Caption = 'Bilinear Interpolation vs Bicubic Interpolation'

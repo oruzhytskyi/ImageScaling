@@ -23,11 +23,19 @@ void __fastcall TNearestVSBicubic::FormActivate(TObject *Sender)
    int on=MainForm->Image1->Picture->Height*2;
    int om=MainForm->Image1->Picture->Width*2;
 
+   Image1->Picture=0;
+   Image2->Picture=0;
+
   Image1->Height=on;
   Image1->Width=om;
 
   Label1->Left=floor((om-Label1->Width)/2.0);
   Label2->Left=floor((om-Label1->Width)/2.0)+om;
+
+  Button1->Left=floor((om-Button1->Width)/2.0);
+  Button2->Left=floor((om-Button1->Width)/2.0)+om;
+  Button1->Top=Image1->Height+Button1->Height+10;
+  Button2->Top=Image1->Height+Button2->Height+10;
 
   Image2->Height=on;
   Image2->Width=om;
@@ -140,3 +148,17 @@ void __fastcall TNearestVSBicubic::FormActivate(TObject *Sender)
 
 }
 //---------------------------------------------------------------------------
+void __fastcall TNearestVSBicubic::Button1Click(TObject *Sender)
+{
+        SavePictureDialog1->Execute();
+        Image1->Picture->SaveToFile(SavePictureDialog1->FileName);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TNearestVSBicubic::Button2Click(TObject *Sender)
+{
+        SavePictureDialog1->Execute();
+        Image2->Picture->SaveToFile(SavePictureDialog1->FileName);
+}
+//---------------------------------------------------------------------------
+

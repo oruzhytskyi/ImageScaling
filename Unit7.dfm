@@ -1,6 +1,6 @@
 object NearestVSBicubic: TNearestVSBicubic
-  Left = 609
-  Top = 345
+  Left = 335
+  Top = 310
   Width = 479
   Height = 250
   AutoSize = True
@@ -52,5 +52,27 @@ object NearestVSBicubic: TNearestVSBicubic
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
+  end
+  object Button1: TButton
+    Left = 72
+    Top = 176
+    Width = 75
+    Height = 25
+    Caption = 'Save Picture'
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 328
+    Top = 176
+    Width = 75
+    Height = 25
+    Caption = 'Save Picture'
+    TabOrder = 1
+    OnClick = Button2Click
+  end
+  object SavePictureDialog1: TSavePictureDialog
+    Left = 440
+    Top = 152
   end
 end

@@ -1,8 +1,8 @@
 object NearestVsBilinear: TNearestVsBilinear
-  Left = 722
-  Top = 205
+  Left = 835
+  Top = 235
   Width = 489
-  Height = 251
+  Height = 291
   AutoSize = True
   Caption = 'Nearest neighbor VS Bilinear interpolation'
   Color = clBtnFace
@@ -20,6 +20,7 @@ object NearestVsBilinear: TNearestVsBilinear
     Top = 32
     Width = 225
     Height = 185
+    IncrementalDisplay = True
   end
   object Label1: TLabel
     Left = 64
@@ -52,5 +53,27 @@ object NearestVsBilinear: TNearestVsBilinear
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
+  end
+  object Button1: TButton
+    Left = 80
+    Top = 232
+    Width = 75
+    Height = 25
+    Caption = 'Save Picture'
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 336
+    Top = 232
+    Width = 75
+    Height = 25
+    Caption = 'Save Picture'
+    TabOrder = 1
+    OnClick = Button2Click
+  end
+  object SavePictureDialog1: TSavePictureDialog
+    Left = 448
+    Top = 232
   end
 end

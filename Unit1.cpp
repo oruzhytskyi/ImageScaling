@@ -22,6 +22,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 void __fastcall TMainForm::LoadPictureButtonClick(TObject *Sender)
 {
   OpenDialog1->Execute();
+  Image1->Refresh();
   Image1->Picture->LoadFromFile(OpenDialog1->FileName);
   Image1->Center=true;
 /*  for(int i=0;i<30;i++)
